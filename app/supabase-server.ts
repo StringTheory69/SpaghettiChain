@@ -5,9 +5,10 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/types/db"
 import { Post, User } from "@/types/main"
 
-export const createServerSupabaseClient = cache(() =>
-  createServerComponentClient<Database>({ cookies })
-)
+export const createServerSupabaseClient = cache(() => {
+  const cookieStore = cookies();
+  return createServerComponentClient<Database>({ cookies: () => cookieStore });
+});
 
 export async function getSupabaseSession() {
   const supabase = createServerSupabaseClient()
@@ -46,12 +47,12 @@ export async function getUser() {
   }
 }
 
-export async function getPostForUser(postId: Post["id"], userId: User["id"]) {
+export async function getPostForUser(chainId: Post["id"], userId: User["id"]) {
   const supabase = createServerSupabaseClient()
   const { data } = await supabase
-    .from("posts")
+    .from("chains")
     .select("*")
-    .eq("id", postId)
+    .eq("id", chainId)
     .eq("author_id", userId)
     .single()
   return data ? { ...data, content: data.content as unknown as JSON } : null

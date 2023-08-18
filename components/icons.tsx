@@ -23,6 +23,9 @@ import {
   Twitter,
   User,
   X,
+  Link,
+  ArrowDown,
+  PlusIcon,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -50,6 +53,8 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  arrowDown: ArrowDown,
+  plus: PlusIcon,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

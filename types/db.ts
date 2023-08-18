@@ -9,7 +9,7 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      posts: {
+      chains: {
         Row: {
           author_id: string
           content: Json | null
@@ -46,10 +46,10 @@ export interface Database {
           id: string
           image: string | null
           name: string | null
-          stripe_current_period_end: string | null
-          stripe_customer_id: string | null
-          stripe_price_id: string | null
-          stripe_subscription_id: string | null
+          // stripe_current_period_end: string | null
+          // stripe_customer_id: string | null
+          // stripe_price_id: string | null
+          // stripe_subscription_id: string | null
           updated_at: string | null
         }
         Insert: {
@@ -59,10 +59,10 @@ export interface Database {
           id: string
           image?: string | null
           name?: string | null
-          stripe_current_period_end?: string | null
-          stripe_customer_id?: string | null
-          stripe_price_id?: string | null
-          stripe_subscription_id?: string | null
+          // stripe_current_period_end?: string | null
+          // stripe_customer_id?: string | null
+          // stripe_price_id?: string | null
+          // stripe_subscription_id?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -72,10 +72,10 @@ export interface Database {
           id?: string
           image?: string | null
           name?: string | null
-          stripe_current_period_end?: string | null
-          stripe_customer_id?: string | null
-          stripe_price_id?: string | null
-          stripe_subscription_id?: string | null
+          // stripe_current_period_end?: string | null
+          // stripe_customer_id?: string | null
+          // stripe_price_id?: string | null
+          // stripe_subscription_id?: string | null
           updated_at?: string | null
         }
       }

@@ -7,7 +7,7 @@ import { postPatchSchema } from "@/lib/validations/post"
 
 const routeContextSchema = z.object({
   params: z.object({
-    postId: z.string(),
+    chainId: z.string(),
   }),
 })
 
@@ -23,11 +23,11 @@ export async function DELETE(
     const { params } = routeContextSchema.parse(context)
 
     // Check if the user has access to this post.
-    if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
+    if (!(await verifyCurrentUserHasAccessToPost(params.chainId))) {
       return new Response(null, { status: 403 })
     }
     // Delete the post.
-    await supabase.from("posts").delete().eq("id", params.postId)
+    await supabase.from("chains").delete().eq("id", params.chainId)
 
     return new Response(null, { status: 204 })
   } catch (error) {
@@ -51,7 +51,7 @@ export async function PATCH(
     const { params } = routeContextSchema.parse(context)
 
     // Check if the user has access to this post.
-    if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
+    if (!(await verifyCurrentUserHasAccessToPost(params.chainId))) {
       return new Response(null, { status: 403 })
     }
 
@@ -62,12 +62,12 @@ export async function PATCH(
     // Update the post.
     // TODO: Implement sanitization for content.
     await supabase
-      .from("posts")
+      .from("chains")
       .update({
         title: body.title,
         content: body.content,
       })
-      .eq("id", params.postId)
+      .eq("id", params.chainId)
       .select()
 
     return new Response(null, { status: 200 })
@@ -80,7 +80,7 @@ export async function PATCH(
   }
 }
 
-async function verifyCurrentUserHasAccessToPost(postId: string) {
+async function verifyCurrentUserHasAccessToPost(chainId: string) {
   const supabase = createRouteHandlerClient <Database>({
     cookies,
   })
@@ -89,9 +89,9 @@ async function verifyCurrentUserHasAccessToPost(postId: string) {
   } = await supabase.auth.getSession()
 
   const { count } = await supabase
-    .from("posts")
+    .from("chains")
     .select("*", { count: "exact", head: true })
-    .eq("id", postId)
+    .eq("id", chainId)
     .eq("author_id", session?.user.id)
 
   return count ? count > 0 : false

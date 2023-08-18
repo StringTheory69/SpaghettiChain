@@ -12,29 +12,29 @@ export const metadata = {
 export default async function DashboardPage() {
   const supabase = createServerSupabaseClient()
 
-  const { data: posts } = await supabase
-    .from("posts")
+  const { data: chains } = await supabase
+    .from("chains")
     .select("id, title, published, created_at")
     .order("updated_at", { ascending: false })
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Posts" text="Create and manage posts.">
+      <DashboardHeader heading="Posts" text="Create and manage chains.">
         <PostCreateButton />
       </DashboardHeader>
       <div>
-        {posts?.length ? (
+        {chains?.length ? (
           <div className="divide-y divide-border rounded-md border">
-            {posts.map((post) => (
+            {chains.map((post) => (
               <PostItem key={post.id} post={post} />
             ))}
           </div>
         ) : (
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>No posts created</EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Title>No chains created</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any posts yet. Start creating content.
+              You don&apos;t have any chains yet. Start creating content.
             </EmptyPlaceholder.Description>
             <PostCreateButton variant="outline" />
           </EmptyPlaceholder>

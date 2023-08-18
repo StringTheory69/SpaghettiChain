@@ -4,7 +4,7 @@ import { Editor } from "@/components/editor"
 import { getPostForUser, getUser } from "@/app/supabase-server"
 
 interface EditorPageProps {
-  params: { postId: string }
+  params: { chainId: string }
 }
 
 export default async function EditorPage({ params }: EditorPageProps) {
@@ -14,7 +14,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
     redirect("/login")
   }
 
-  const post = await getPostForUser(params.postId, user.id)
+  const post = await getPostForUser(params.chainId, user.id)
 
   if (!post) {
     notFound()

@@ -10,7 +10,7 @@ export const metadata = {
 }
 
 export default async function BlogPage() {
-  const posts = allPosts
+  const chains = allPosts
     .filter((post) => post.published)
     .sort((a, b) => {
       return compareDesc(new Date(a.date), new Date(b.date))
@@ -29,9 +29,9 @@ export default async function BlogPage() {
         </div>
       </div>
       <hr className="my-8" />
-      {posts?.length ? (
+      {chains?.length ? (
         <div className="grid gap-10 sm:grid-cols-2">
-          {posts.map((post, index) => (
+          {chains.map((post, index) => (
             <article
               key={post._id}
               className="group relative flex flex-col space-y-2"
@@ -62,7 +62,7 @@ export default async function BlogPage() {
           ))}
         </div>
       ) : (
-        <p>No posts published.</p>
+        <p>No chains published.</p>
       )}
     </div>
   )

@@ -11,14 +11,8 @@ create table users (
   image text,
   created_at timestamp with time zone, 
   updated_at timestamp with time zone,
-  stripe_customer_id text,
-  stripe_subscription_id text,
-  stripe_price_id text,
-  stripe_current_period_end timestamp with time zone
 );
 alter table users add constraint unique_email unique (email);
-alter table users add constraint unique_stripe_customer_id unique (stripe_customer_id);
-alter table users add constraint unique_stripe_subscription_id unique (stripe_subscription_id);
 alter table users enable row level security;
 create policy "Users can view own user data." on users for select using (auth.uid() = id);
 create policy "Users can update own user data." on users for update using (auth.uid() = id);
@@ -57,11 +51,11 @@ create trigger on_auth_user_updated
   for each row execute procedure public.update_public_user_info();
 
 /**
-* POSTS
+* chains
 * Note: this is a private table that contains a mapping of user IDs to author IDs.
 */
 
-create table posts (
+create table chains (
   id uuid default uuid_generate_v4() not null primary key,
   title text not null,
   content jsonb,
@@ -70,8 +64,9 @@ create table posts (
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
   author_id uuid references public.users(id) not null
 );
-alter table posts enable row level security;
-create policy "Anyone can read posts." on posts for select using (true);
-create policy "Authorized users can insert posts." on posts for insert to authenticated with check (true);
-create policy "Users update own posts." on posts for update using (auth.uid() = author_id);
-create policy "Users delete own posts." on posts for delete using (auth.uid() = author_id);
+
+alter table chains enable row level security;
+create policy "Anyone can read chains." on chains for select using (true);
+create policy "Authorized users can insert chains." on chains for insert to authenticated with check (true);
+create policy "Users update own chains." on chains for update using (auth.uid() = author_id);
+create policy "Users delete own chains." on chains for delete using (auth.uid() = author_id);

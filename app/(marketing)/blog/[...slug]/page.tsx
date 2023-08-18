@@ -104,7 +104,7 @@ export default async function PostPage({ params }: PostPageProps) {
         )}
       >
         <Icons.chevronLeft className="mr-2 h-4 w-4" />
-        See all posts
+        See all chains
       </Link>
       <div>
         {post.date && (
@@ -161,7 +161,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <div className="flex justify-center py-6 lg:py-10">
         <Link href="/blog" className={cn(buttonVariants({ variant: "ghost" }))}>
           <Icons.chevronLeft className="mr-2 h-4 w-4" />
-          See all posts
+          See all chains
         </Link>
       </div>
     </article>
