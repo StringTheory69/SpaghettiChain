@@ -32,5 +32,5 @@ export const getURL = () => {
   url = url.concat("auth/callback")
 
   console.error("GET URL", url)
-  return "https://spaghetti-chain.vercel.app/auth/callback"
+  return url
 }
