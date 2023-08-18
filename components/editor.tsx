@@ -329,8 +329,9 @@ export function Editor({ post }: EditorProps) {
         });
 
       }
+      setLoadingPrompt(null)
 
-      if (done && prompts.length > index + 1 && true) {
+      if (done && prompts.length > index + 1 && run) {
         generate(index + 1, run)
       }
 
@@ -341,17 +342,16 @@ export function Editor({ post }: EditorProps) {
         description: `Prompt ${index + 1} generation failed. Please try again.`,
         variant: "destructive",
       });
-    } finally {
-      setLoadingPrompt(null)
     }
   }
 
-  if (initialLoading) return;
+  if (initialLoading) return <div></div>;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full max-h-screen">
       <div className="fixed left-0 z-10 flex h-14 w-full items-center justify-between border-b bg-background px-4">
         <div className="flex items-center space-x-10">
+          <div className="text-lg">🍝</div>
           <Link
             href="/dashboard"
             className={cn(buttonVariants({ variant: "ghost" }))}
