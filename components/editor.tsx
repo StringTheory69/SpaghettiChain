@@ -64,6 +64,7 @@ export function Editor({ post }: EditorProps) {
     const fetchPrompts = async () => {
       try {
         const postParsed = await postPatchSchema.parse(post).content;
+        if (postParsed === null) return;
         console.log("POST", postParsed);
         setPrompts(postParsed);
         setInitalLoading(false)
