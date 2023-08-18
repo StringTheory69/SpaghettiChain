@@ -17,6 +17,7 @@ export default async function DashboardLayout({
   const user = await getAuthUser()
 
   if (!user) {
+    console.log("USER DOESN'T EXIST")
     redirect("/login")
   }
 
