@@ -64,7 +64,7 @@ export function Editor({ post }: EditorProps) {
     const fetchPrompts = async () => {
       try {
         const postParsed = await postPatchSchema.parse(post).content;
-        if (postParsed === null) return;
+        if (postParsed === null) return setInitalLoading(false);
         console.log("POST", postParsed);
         setPrompts(postParsed);
         setInitalLoading(false)
@@ -383,7 +383,7 @@ export function Editor({ post }: EditorProps) {
       <div className="flex h-full max-h-screen w-full justify-center">
         <div className="w-full" />
         {/* <div className="prose prose-stone mx-auto w-[800px] dark:prose-invert"> */}
-        <ScrollArea className="overflow-y mt-14 flex min-w-[700px] flex-col items-center space-y-1 border-x px-12">
+        <ScrollArea className="overflow-y mt-20 flex min-w-[700px] flex-col items-center space-y-1 px-12">
           {prompts.map((_, i) => (
             <div className="flex w-full flex-col items-center">
 
@@ -438,7 +438,7 @@ export function Editor({ post }: EditorProps) {
           <Button type="button" className="w-40" onClick={addPrompt}>Add Prompt <Icons.plus className="ml-1 h-4 w-4" /></Button>
         </ScrollArea>
         <div className="relative flex w-full justify-center">
-          {selectedPrompt !== null && <div className="prompt-item fixed top-20 mt-14 h-72 w-60 rounded-lg border p-4">
+          {selectedPrompt !== null && <div className="prompt-item fixed top-20 mt-20 h-72 w-60 rounded-lg border p-4">
             <ModelSelector types={types} models={models} selectedModel={prompts[selectedPrompt]?.model} setSelectedModel={(model) => handleUpdatePrompt(selectedPrompt, "model", model)} />
             <TemperatureSelector value={[prompts[selectedPrompt]?.temperature]} setValue={(value) => {
               const v = value[0]
