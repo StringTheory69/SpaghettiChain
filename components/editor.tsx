@@ -396,7 +396,7 @@ export function Editor({ post }: EditorProps) {
                   handlePromptClick(i)
                 }}
               >
-                <div className="flex w-full justify-between items-center mb-2 px-1"><div className="text-xs">Prompt #{i + 1}</div><Button
+                <div className="mb-2 flex w-full items-center justify-between px-1"><div className="text-xs">Prompt #{i + 1}</div><Button
                   variant="destructive"
                   type="button"
                   className="delete-item h-7 w-7 p-0 text-xs"
@@ -429,7 +429,7 @@ export function Editor({ post }: EditorProps) {
 
                   />
                 </p>
-                <Button type="button" className="w-24 h-7 text-xs absolute left-4 bottom-4" onClick={() => generate(i, false)}>Generate{i === loadingPrompt && <Icons.spinner className="ml-1 h-4 w-4 animate-spin" />}</Button>
+                <Button type="button" className="absolute bottom-4 left-4 h-7 w-24 text-xs" onClick={() => generate(i, false)}>Generate{i === loadingPrompt && <Icons.spinner className="ml-1 h-4 w-4 animate-spin" />}</Button>
               </div>
               <Icons.arrowDown className="my-3 h-4 w-4 fill-primary" />
             </div>
