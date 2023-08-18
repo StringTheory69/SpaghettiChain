@@ -5,10 +5,14 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Database } from "@/types/db"
 import { Post, User } from "@/types/main"
 
-export const createServerSupabaseClient = cache(() => {
-  const cookieStore = cookies();
-  return createServerComponentClient<Database>({ cookies: () => cookieStore });
-});
+export const createServerSupabaseClient = cache(() =>
+  createServerComponentClient<Database>({ cookies })
+)
+
+// export const createServerSupabaseClient = cache(() => {
+//   const cookieStore = cookies();
+//   return _createServerComponentClient<Database>({ cookies: () => cookieStore });
+// });
 
 export async function getSupabaseSession() {
   const supabase = createServerSupabaseClient()
