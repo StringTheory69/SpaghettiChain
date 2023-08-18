@@ -17,7 +17,6 @@ export default async function LoginPage() {
   const user = await getAuthUser()
 
   if (user) {
-    console.error("LOGIN PAGE: USER DOESN'T EXIST")
     redirect("/dashboard")
   }
 
