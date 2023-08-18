@@ -14,7 +14,7 @@ export default function UserAuthForm() {
       <Auth
         supabaseClient={supabase}
         providers={["google"]}
-        redirectTo={getURL()}
+        redirectTo={"https://spaghetti-chain.vercel.app"}
         magicLink={true}
         appearance={{
           className: {
