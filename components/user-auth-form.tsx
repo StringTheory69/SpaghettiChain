@@ -15,7 +15,6 @@ export default function UserAuthForm() {
         supabaseClient={supabase}
         providers={["google"]}
         redirectTo={getURL()}
-        magicLink={false}
         appearance={{
           className: {
             anchor:
