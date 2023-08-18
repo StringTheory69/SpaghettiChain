@@ -121,11 +121,6 @@
     "tailwindcss": "^3.3.2",
     "typescript": "5.0.4",
     "unist-util-visit": "^4.1.2"
-  },
-    "overrides": {
-      "@supabase/supabase-js": {
-        "@supabase/gotrue-js": "2.43.1"
-      }
-    }
+  }
   
 }
