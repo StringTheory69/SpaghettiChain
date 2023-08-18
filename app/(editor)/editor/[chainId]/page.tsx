@@ -11,6 +11,8 @@ export default async function EditorPage({ params }: EditorPageProps) {
   const user = await getUser()
 
   if (!user) {
+    console.error("EDITOR PAGE: USER DOESN'T EXIST")
+
     redirect("/login")
   }
 
