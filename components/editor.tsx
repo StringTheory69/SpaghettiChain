@@ -280,19 +280,19 @@ export function Editor({ post }: EditorProps) {
       }
       setLoadingPrompt(index)
 
-    //   setPrompts((prevPrompts) =>
-    //   prevPrompts.map((prompt, i) => ({
-    //     ...prompt,
-    //     response: i >= index ? "" : prompt.response,
-    //   }))
-    // );
+      //   setPrompts((prevPrompts) =>
+      //   prevPrompts.map((prompt, i) => ({
+      //     ...prompt,
+      //     response: i >= index ? "" : prompt.response,
+      //   }))
+      // );
 
       const response = await fetch(`/api/ai`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...prompts[index], apiKey, model: prompts[index]?.model?.name, user: replaceResponsePlaceholders(prompts[index].user)}),
+        body: JSON.stringify({ ...prompts[index], apiKey, model: prompts[index]?.model?.name, user: replaceResponsePlaceholders(prompts[index].user) }),
       });
 
       console.log("USER", index, replaceResponsePlaceholders(prompts[index].user))
@@ -321,12 +321,12 @@ export function Editor({ post }: EditorProps) {
         const chunkValue = decoder.decode(value);
         responseValue += chunkValue; // Add the new chunkValue to the existing response value
         setPrompts((prevPrompts) => {
-            const newPrompts = [...prevPrompts];
-            newPrompts[index] = {
-                ...newPrompts[index],
-                response: responseValue,
-            };
-            return newPrompts;
+          const newPrompts = [...prevPrompts];
+          newPrompts[index] = {
+            ...newPrompts[index],
+            response: responseValue,
+          };
+          return newPrompts;
         });
 
       }
@@ -349,7 +349,7 @@ export function Editor({ post }: EditorProps) {
   if (initialLoading) return <div></div>;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="h-full max-h-screen">
+    <form onSubmit={handleSubmit(onSubmit)} className="">
       <div className="fixed left-0 z-10 flex h-14 w-full items-center justify-between border-b bg-background px-4">
         <div className="flex items-center space-x-10">
           <div className="text-lg">🍝</div>
@@ -366,19 +366,19 @@ export function Editor({ post }: EditorProps) {
             {post.published ? "Published" : "Draft"}
           </p>
         </div>
-        <Input className="h-8 w-40 border" placeholder="OPEN AI API CODE" value={apiKey} onChange={(event) => setApiKey(event.target.value)} />
+        <Input className="h-8 w-52 border" placeholder="OpenAI API Key..." value={apiKey} onChange={(event) => setApiKey(event.target.value)} />
         <div>  <button type="button" disabled={loadingPrompt !== null || prompts.length === 0} className={cn(buttonVariants())} onClick={() => generate(0, true)}>
           {loadingPrompt !== null && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
           <span>Run</span>
         </button>  <button type="submit" className={cn(buttonVariants())}>
-          {isSaving && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )}
-          <span>Save</span>
-        </button></div>
-      
+            {isSaving && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            <span>Save</span>
+          </button></div>
+
       </div>
       <div className="flex h-full max-h-screen w-full justify-center">
         <div className="w-full" />
@@ -389,56 +389,64 @@ export function Editor({ post }: EditorProps) {
 
               <div
                 key={i}
-                className={`relative flex h-80 w-full flex-col items-center space-y-2 rounded-xl border p-4 ${selectedPrompt === i ? "border-2 border-primary" : ""
+                className={`relative flex h-85 w-full flex-col items-center space-y-2 rounded p-4 bg-card border ${selectedPrompt === i ? "border-2 border-primary" : ""
                   } prompt-item`}
                 onClick={() => {
                   if (i === loadingPrompt) return
                   handlePromptClick(i)
                 }}
               >
-                <div className="mb-2 flex w-full items-center justify-between px-1"><div className="text-xs">Prompt #{i + 1}</div><Button
-                  variant="destructive"
-                  type="button"
-                  className="delete-item h-7 w-7 p-0 text-xs"
-                  onClick={(e) => {
-                    // Prevent the click event from propagating to the parent element
-                    e.stopPropagation();
-                    handleDeletePrompt(i);
-                  }}
-                ><Icons.minus className="h-4 w-4"/></Button></div>
+
+                <div className="mb-2 flex w-full items-center justify-between px-1">
+                  <div className="text-xs">Prompt #{i + 1}</div>
+                  <div className="mb-2 flex space-x-2 items-center px-1">
+                    <Button type="button" className=" h-7 w-24 text-xs" onClick={() => generate(i, false)}>Generate{i === loadingPrompt && <Icons.spinner className="ml-1 h-4 w-4 animate-spin" />}</Button>
+
+                    <Button
+                      variant="destructive"
+                      type="button"
+                      className="delete-item h-7 w-7 p-0 text-xs"
+                      onClick={(e) => {
+                        // Prevent the click event from propagating to the parent element
+                        e.stopPropagation();
+                        handleDeletePrompt(i);
+                      }}
+                    ><Icons.minus className="h-4 w-4" /></Button>
+                  </div>
+                </div>
                 <p className="flex w-full space-x-3 rounded-md text-sm text-muted-foreground">
                   <div className="border-orange h-7 w-24 rounded border bg-transparent px-2 py-1 text-center text-xs text-primary">System</div>
-                  <Textarea className="h-14" value={prompts[i]?.systemNotes || ""}
+                  <Textarea className="h-10 p-1.5" value={prompts[i]?.systemNotes || ""}
                     onChange={(event) => handleUpdatePrompt(i, "systemNotes", event.target.value)
                     }
                   />
                 </p>
                 <p className="flex w-full space-x-3 rounded-md text-sm text-muted-foreground">
                   <div className="border-orange h-7 w-24 rounded border bg-transparent px-2 py-1 text-center text-xs text-primary">User</div>
-                  <Textarea className="h-14" value={prompts[i]?.user}
+                  <Textarea className="h-20" value={prompts[i]?.user}
                     onChange={(event) => handleUpdatePrompt(i, "user", event.target.value)}
                     placeholder={i > 0 ? `insert previous like this - [RESPONSE ${i}]` : ""}
-                    
+
                   />
                 </p>
-                <p className="flex w-full space-x-3 rounded-md text-sm text-muted-foreground">
-                  <div className="border-orange h-7 w-24 rounded border bg-transparent px-2 py-1 text-center text-xs text-primary ">Response</div>
-                  <Textarea className="no-outline h-14" value={prompts[i]?.response || ""}
+                <div className="border-b w-full pt-2" />
+                <p className="flex w-full space-x-3 rounded-md text-sm text-muted-foreground pt-2">
+                  <div className="border-orange h-7 w-24 rounded border bg-transparent px-2 py-1 text-center text-xs ">Response</div>
+                  <Textarea className="no-outline h-20 cursor-pointer" value={prompts[i]?.response || ""}
                     readOnly
                     onSelect={(e) => e.preventDefault()} // Prevent text selection
 
                   />
                 </p>
-                <Button type="button" className="absolute bottom-4 left-4 h-7 w-24 text-xs" onClick={() => generate(i, false)}>Generate{i === loadingPrompt && <Icons.spinner className="ml-1 h-4 w-4 animate-spin" />}</Button>
               </div>
-              <Icons.arrowDown className="my-3 h-4 w-4 fill-primary" />
+              <Icons.arrowDown className="my-3 h-4 w-4 fill-none" />
             </div>
 
           ))}
-          <div className="pb-10 pt-4"><Button type="button" className="w-40" onClick={addPrompt}>Add Prompt <Icons.plus className="ml-1 h-4 w-4" /></Button></div>
+          <div className="pb-12 pt-2 h-6"><Button type="button" className="w-36" onClick={addPrompt}>Add Prompt <Icons.plus className="ml-1 h-4 w-4" /></Button></div>
         </ScrollArea>
         <div className="relative flex w-full justify-center">
-          {selectedPrompt !== null && <div className="prompt-item fixed top-0 mt-20 h-72 w-60 rounded-lg border p-4">
+          {selectedPrompt !== null && <div className="prompt-item fixed top-0 mt-20 h-72 w-60 rounded-lg border p-4 bg-card">
             <ModelSelector types={types} models={models} selectedModel={prompts[selectedPrompt]?.model} setSelectedModel={(model) => handleUpdatePrompt(selectedPrompt, "model", model)} />
             <TemperatureSelector value={[prompts[selectedPrompt]?.temperature]} setValue={(value) => {
               const v = value[0]
