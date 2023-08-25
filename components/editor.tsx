@@ -389,7 +389,7 @@ export function Editor({ post }: EditorProps) {
 
               <div
                 key={i}
-                className={`relative flex h-85 w-full flex-col items-center space-y-2 rounded p-4 bg-card border ${selectedPrompt === i ? "border-2 border-primary" : ""
+                className={`h-85 relative flex w-full flex-col items-center space-y-2 rounded border bg-card p-4 ${selectedPrompt === i ? "border-2 border-primary" : ""
                   } prompt-item`}
                 onClick={() => {
                   if (i === loadingPrompt) return
@@ -399,7 +399,7 @@ export function Editor({ post }: EditorProps) {
 
                 <div className="mb-2 flex w-full items-center justify-between px-1">
                   <div className="text-xs">Prompt #{i + 1}</div>
-                  <div className="mb-2 flex space-x-2 items-center px-1">
+                  <div className="mb-2 flex items-center space-x-2 px-1">
                     <Button type="button" className=" h-7 w-24 text-xs" onClick={() => generate(i, false)}>Generate{i === loadingPrompt && <Icons.spinner className="ml-1 h-4 w-4 animate-spin" />}</Button>
 
                     <Button
@@ -429,8 +429,8 @@ export function Editor({ post }: EditorProps) {
 
                   />
                 </p>
-                <div className="border-b w-full pt-2" />
-                <p className="flex w-full space-x-3 rounded-md text-sm text-muted-foreground pt-2">
+                <div className="w-full border-b pt-2" />
+                <p className="flex w-full space-x-3 rounded-md pt-2 text-sm text-muted-foreground">
                   <div className="border-orange h-7 w-24 rounded border bg-transparent px-2 py-1 text-center text-xs ">Response</div>
                   <Textarea className="no-outline h-20 cursor-pointer" value={prompts[i]?.response || ""}
                     readOnly
@@ -443,10 +443,10 @@ export function Editor({ post }: EditorProps) {
             </div>
 
           ))}
-          <div className="pb-12 pt-2 h-6"><Button type="button" className="w-36" onClick={addPrompt}>Add Prompt <Icons.plus className="ml-1 h-4 w-4" /></Button></div>
+          <div className="h-6 pb-12 pt-2"><Button type="button" className="w-36" onClick={addPrompt}>Add Prompt <Icons.plus className="ml-1 h-4 w-4" /></Button></div>
         </ScrollArea>
         <div className="relative flex w-full justify-center">
-          {selectedPrompt !== null && <div className="prompt-item fixed top-0 mt-20 h-72 w-60 rounded-lg border p-4 bg-card">
+          {selectedPrompt !== null && <div className="prompt-item fixed top-0 mt-20 h-72 w-60 rounded-lg border bg-card p-4">
             <ModelSelector types={types} models={models} selectedModel={prompts[selectedPrompt]?.model} setSelectedModel={(model) => handleUpdatePrompt(selectedPrompt, "model", model)} />
             <TemperatureSelector value={[prompts[selectedPrompt]?.temperature]} setValue={(value) => {
               const v = value[0]
